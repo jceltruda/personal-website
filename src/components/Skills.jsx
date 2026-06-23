@@ -7,7 +7,7 @@ const skills = [
 
 export default function Skills() {
   return (
-    <section className="animate-fade-in delay-400">
+    <section id="skills" className="animate-fade-in delay-400">
       <h2>Skills</h2>
       <div className="skills-container">
         {skills.map((skill, index) => (

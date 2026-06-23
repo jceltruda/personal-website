@@ -45,7 +45,7 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section className="animate-fade-in delay-200">
+    <section id="experience" className="animate-fade-in delay-200">
       <h2>Work Experience</h2>
       <div className="experience-list">
         {experiences.map((exp) => (

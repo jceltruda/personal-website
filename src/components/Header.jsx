@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default function Header() {
   return (
-    <section className="header-section animate-fade-in delay-100">
+    <section id="about" className="header-section animate-fade-in delay-100">
       <div className="header-top">
         <div className="header-info">
           <h1 className="header-name">Joseph Celtruda</h1>
