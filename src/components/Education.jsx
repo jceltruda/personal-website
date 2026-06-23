@@ -23,7 +23,7 @@ const education = [
 
 export default function Education() {
   return (
-    <section id="education" className="animate-fade-in delay-300">
+    <section id="education">
       <h2>Education</h2>
       <div className="experience-list">
         {education.map((edu) => (

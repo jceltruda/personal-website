@@ -24,7 +24,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="animate-fade-in delay-400">
+    <section id="projects">
       <h2>Projects</h2>
       <div className="projects-grid">
         {projects.map((project) => (

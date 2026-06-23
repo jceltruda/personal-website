@@ -1,4 +1,5 @@
 import NavBar from '../components/NavBar';
+import Reveal from '../components/Reveal';
 import Header from '../components/Header';
 import Experience from '../components/Experience';
 import Education from '../components/Education';
@@ -10,11 +11,11 @@ export default function Page() {
     <>
       <NavBar />
       <main className="app-container">
-        <Header />
-        <Experience />
-        <Education />
-        <Projects />
-        <Skills />
+        <Reveal><Header /></Reveal>
+        <Reveal><Experience /></Reveal>
+        <Reveal><Education /></Reveal>
+        <Reveal><Projects /></Reveal>
+        <Reveal><Skills /></Reveal>
       </main>
     </>
   );
