@@ -80,6 +80,8 @@ request. The server keeps nothing between requests.
 
 **Request:** `useChat` POSTs `{ messages }` to `/api/chat`.
 
+**Check order:** parse JSON (→ 400) → **validate (→ 400) → rate-limit (→ 429)** → key check (→ 500) → stream. Validation runs *before* rate limiting so that malformed/invalid requests are rejected for free and do not consume a legitimate IP's rate-limit budget.
+
 **Validation (→ 400 on failure):**
 - `messages` is a non-empty array.
 - Last message has non-empty text content.
@@ -92,6 +94,10 @@ request. The server keeps nothing between requests.
 - In-memory per edge instance. **Known limitation:** resets on cold start and is not shared
   across instances. Acceptable for the "basic guardrails" tier; documented upgrade path is
   Vercel KV / Upstash Redis.
+- **Trust caveat:** `x-forwarded-for` is client-supplied and best-effort. If the header is
+  absent all such requests share one bucket; a client could also vary it to spread load. This
+  is accepted for the "basic guardrails" tier — a hardened version would use a
+  platform-provided trusted client IP.
 
 **System prompt:** curated background document + behavior rules:
 - Only answer questions about Joseph and his work.
