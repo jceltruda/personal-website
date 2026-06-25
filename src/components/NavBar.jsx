@@ -35,7 +35,10 @@ export default function NavBar() {
 
   const handleClick = (e, id) => {
     e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
   };
 
   return (

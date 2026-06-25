@@ -109,13 +109,25 @@ section[id] {
   border: 1px solid #4a4a4a;
   color: #c8c8c8;
   background-color: var(--bg-color);
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.2s var(--ease-out);
 }
 
 .social-icon:hover {
   background-color: var(--brand-color);
   color: #ffffff;
   border-color: var(--brand-color);
+}
+
+/* Press feedback — pressable elements should feel responsive */
+.social-icon:active {
+  transform: scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-icon:active {
+    transform: none;
+  }
 }
 
 .header-image {
