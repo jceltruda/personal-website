@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const navItems = [
   { id: 'about', label: 'About' },
@@ -50,6 +51,9 @@ export default function NavBar() {
             {label}
           </a>
         ))}
+        <Link href="/chat" className="navbar-link navbar-chat-link">
+          Ask AI
+        </Link>
       </div>
     </nav>
   );
