@@ -105,7 +105,7 @@ streamText({
   model: openrouter(process.env.CHAT_MODEL ?? 'anthropic/claude-3.5-haiku'),
   system: systemPrompt,
   messages,
-  maxOutputTokens: 600,
+  maxOutputTokens: 1500,
   temperature: 0.4,
 })
 ```
