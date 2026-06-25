@@ -318,7 +318,9 @@ section[id] {
 }
 .chat-bubble-assistant {
   align-self: flex-start;
-  background: var(--card-bg, #1a1a1a);
+  background: var(--card-bg, #242424);
+  border: 1px solid var(--border-color, #333);
+  color: #e8e8e8;
 }
 .chat-typing { opacity: 0.6; }
 .chat-error { color: #ef4444; font-size: 0.9rem; }
@@ -332,6 +334,11 @@ section[id] {
   color: inherit;
   font: inherit;
 }
+.chat-input:focus {
+  outline: none;
+  border-color: var(--accent-color, #38BDF8);
+}
+.chat-input::placeholder { color: var(--text-muted, #909090); }
 .chat-send {
   padding: 0.7rem 1.1rem;
   border-radius: 0.6rem;
