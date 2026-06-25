@@ -6,7 +6,7 @@ import { SYSTEM_PROMPT } from '../../../content/assistant-prompt.js';
 
 export const runtime = 'edge';
 
-const DEFAULT_MODEL = 'anthropic/claude-3.5-haiku';
+const DEFAULT_MODEL = 'anthropic/claude-haiku-4.5';
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -53,7 +53,7 @@ export async function POST(request) {
     const result = streamText({
       model: openrouter(process.env.CHAT_MODEL || DEFAULT_MODEL),
       system: SYSTEM_PROMPT,
-      messages: convertToModelMessages(validation.messages),
+      messages: await convertToModelMessages(validation.messages),
       maxOutputTokens: 1500,
       temperature: 0.4,
     });
