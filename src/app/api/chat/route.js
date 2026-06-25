@@ -16,6 +16,24 @@ function json(body, status) {
 }
 
 export async function POST(request) {
+  // Parse JSON body first — malformed requests are rejected for free and
+  // must not consume rate-limit budget.
+  let body;
+  try {
+    body = await request.json();
+  } catch (err) {
+    console.error('Failed to parse request JSON:', err);
+    return json({ error: 'Invalid JSON body.' }, 400);
+  }
+
+  const validation = validateChatRequest(body);
+  if (!validation.ok) {
+    return json({ error: validation.error }, validation.status);
+  }
+
+  // x-forwarded-for is client-supplied / best-effort: if absent all requests
+  // share one bucket, and it could be varied to spread load — accepted for
+  // the basic-guardrails tier.
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 
   const limit = checkRateLimit(ip);
@@ -24,18 +42,6 @@ export async function POST(request) {
       JSON.stringify({ error: 'Too many requests. Please slow down.' }),
       { status: 429, headers: { 'content-type': 'application/json', 'Retry-After': String(limit.retryAfterSeconds) } },
     );
-  }
-
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ error: 'Invalid JSON body.' }, 400);
-  }
-
-  const validation = validateChatRequest(body);
-  if (!validation.ok) {
-    return json({ error: validation.error }, validation.status);
   }
 
   if (!process.env.OPENROUTER_API_KEY) {
@@ -52,7 +58,8 @@ export async function POST(request) {
       temperature: 0.4,
     });
     return result.toUIMessageStreamResponse();
-  } catch {
+  } catch (err) {
+    console.error('streamText failed:', err);
     return json({ error: 'The assistant ran into a problem. Please try again.' }, 500);
   }
 }

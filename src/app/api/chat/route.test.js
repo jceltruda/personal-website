@@ -51,6 +51,7 @@ describe('POST /api/chat', () => {
     const res = await POST(makeRequest({ messages: [userMsg('hi')] }, '9.9.9.9'));
     expect(res.status).toBe(429);
     expect(res.headers.get('Retry-After')).toBeTruthy();
+    expect(Number(res.headers.get('Retry-After'))).toBeGreaterThan(0);
   });
 
   it('returns 500 when the API key is missing', async () => {
