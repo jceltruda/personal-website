@@ -12,7 +12,7 @@
 
 - **No TypeScript.** Plain JS/JSX only, matching the existing codebase.
 - **Vanilla CSS** in `src/App.css` using existing custom properties from `src/index.css`. No CSS Modules / Tailwind.
-- **AI SDK v5 API.** Server uses `streamText` + `convertToModelMessages` from `ai` and returns `result.toUIMessageStreamResponse()`. Client uses `useChat` from `@ai-sdk/react` with self-managed input (`sendMessage({ text })`). Messages are `UIMessage`s with a `parts` array. If `npm` resolves a different major of `ai`, follow that major's migration guide.
+- **AI SDK v6 API** (installed: `ai@6`, `@ai-sdk/react@3` — verified against `node_modules`). Server uses `streamText` + `convertToModelMessages` from `ai` and returns `result.toUIMessageStreamResponse()` (a method on the streamText result — NOT the standalone `createUIMessageStreamResponse` export; both exist, use the result method). Client uses `useChat` from `@ai-sdk/react` (returns `messages`, `sendMessage`, `status`, `error`) with self-managed input (`sendMessage({ text })`) and `DefaultChatTransport` from `ai`. Messages are `UIMessage`s with a `parts` array. The Task 5/6 code below is already correct for v6 — implement it as written.
 - **Edge runtime** for the API route: `export const runtime = 'edge'`.
 - **Secrets never committed.** `OPENROUTER_API_KEY` lives only in `.env.local` (gitignored) and Vercel settings.
 - **Model is configurable:** `process.env.CHAT_MODEL ?? 'anthropic/claude-3.5-haiku'`.
