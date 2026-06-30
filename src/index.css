@@ -43,6 +43,14 @@ a:hover {
   color: var(--accent-color);
 }
 
+/* Keyboard focus: a single accent ring on anything interactive. Elements that
+   manage their own focus affordance (e.g. the chat input's accent border) keep
+   it — their `:focus { outline: none }` wins over this zero-specificity rule. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
 h1, h2, h3, h4 {
   color: var(--primary-color);
   font-weight: 700;

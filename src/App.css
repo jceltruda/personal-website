@@ -38,6 +38,13 @@
   border-bottom-color: var(--accent-color);
 }
 
+/* The AI assistant is the signature surface and the obvious next step, so it
+   sits apart from the section links as a right-aligned CTA — distinguished by
+   position, not by competing with the name for the one accent. */
+.navbar-chat-link {
+  margin-left: auto;
+}
+
 section[id] {
   scroll-margin-top: 3rem;
 }
@@ -342,7 +349,7 @@ section[id] {
   padding: 0.7rem 0.9rem;
   border-radius: 0.6rem;
   border: 1px solid var(--border-color, #333);
-  background: var(--card-bg, #1a1a1a);
+  background: var(--card-bg, #242424);
   color: inherit;
   font: inherit;
 }

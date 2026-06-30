@@ -4,7 +4,8 @@ const projects = [
     title: "Rehab Games",
     description: "Turns rehab exercises into fun retro games",
     tags: ["JavaScript", "Django", "MediaPipe", "Gunicorn"],
-    link: "https://rehab-games.onrender.com/"
+    link: "https://rehab-games.onrender.com/",
+    active: true
   },
   {
     id: 2,
@@ -35,7 +36,14 @@ export default function Projects() {
               ) : (
                 <span className="project-title">{project.title}</span>
               )}
-              <span className="project-status"></span>
+              {project.active && (
+                <span
+                  className="project-status"
+                  role="img"
+                  aria-label="Active project"
+                  title="Active project"
+                ></span>
+              )}
             </div>
             <p className="project-desc">{project.description}</p>
             <div className="project-tags">
