@@ -18,8 +18,19 @@ export default function NavBar() {
 
   useEffect(() => {
     if (!onHome) return undefined;
+
+    // When scrolled to the bottom, the last section can't rise into the
+    // observer's top detection band, so force it active there.
+    const atBottom = () =>
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 2;
+
     const observer = new IntersectionObserver(
       (entries) => {
+        if (atBottom()) {
+          setActiveSection(navItems[navItems.length - 1].id);
+          return;
+        }
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
@@ -34,7 +45,21 @@ export default function NavBar() {
       if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (atBottom()) setActiveSection(navItems[navItems.length - 1].id);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [onHome]);
 
   // On the home page, intercept and smooth-scroll. On other routes the link
@@ -63,9 +88,9 @@ export default function NavBar() {
         ))}
         <Link
           href="/chat"
-          className={`navbar-link navbar-chat-link${pathname === '/chat' ? ' navbar-link-active' : ''}`}
+          className={`navbar-link${pathname === '/chat' ? ' navbar-link-active' : ''}`}
         >
-          Ask AI
+          Chat
         </Link>
       </div>
     </nav>

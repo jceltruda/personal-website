@@ -38,13 +38,6 @@
   border-bottom-color: var(--accent-color);
 }
 
-/* The AI assistant is the signature surface and the obvious next step, so it
-   sits apart from the section links as a right-aligned CTA — distinguished by
-   position, not by competing with the name for the one accent. */
-.navbar-chat-link {
-  margin-left: auto;
-}
-
 section[id] {
   scroll-margin-top: 3rem;
 }
@@ -312,59 +305,157 @@ section[id] {
   flex-direction: column;
   min-height: 100vh;
 }
-.chat-title { margin-bottom: 0.25rem; }
-.chat-subtitle { color: var(--text-muted, #888); margin-bottom: 1.5rem; }
+
+/* Empty state: a centered greeting hero with clickable prompt suggestions —
+   the modern chatbot "start here" moment. */
+.chat-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding-bottom: 3rem;
+}
+.chat-greeting {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--primary-color);
+  min-height: 2.7rem;
+}
+.chat-greeting-text {
+  display: inline-block;
+  animation: chat-greeting-in 0.4s ease both;
+}
+@keyframes chat-greeting-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.chat-hero-sub {
+  color: var(--text-main);
+  max-width: 44ch;
+}
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.chat-suggestion {
+  padding: 0.5rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.chat-suggestion:hover {
+  border-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+/* Conversation */
 .chat-messages {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
 }
-.chat-empty { color: var(--text-muted, #888); font-style: italic; }
+.chat-row { display: flex; }
+.chat-row-user { justify-content: flex-end; }
+.chat-row-assistant { justify-content: flex-start; }
 .chat-bubble {
-  padding: 0.625rem 0.9rem;
-  border-radius: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 1rem;
   max-width: 85%;
   line-height: 1.5;
 }
 .chat-bubble p:first-child { margin-top: 0; }
 .chat-bubble p:last-child { margin-bottom: 0; }
 .chat-bubble-user {
-  align-self: flex-end;
   background: var(--brand-color, #1E5AA8);
   color: #fff;
+  border-bottom-right-radius: 0.35rem;
 }
 .chat-bubble-assistant {
-  align-self: flex-start;
   background: var(--card-bg, #242424);
   border: 1px solid var(--border-color, #333);
   color: #e8e8e8;
+  border-bottom-left-radius: 0.35rem;
 }
-.chat-typing { opacity: 0.6; }
+.chat-typing {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+.chat-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: chat-bounce 1.2s infinite ease-in-out;
+}
+.chat-dot:nth-child(2) { animation-delay: 0.15s; }
+.chat-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes chat-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-0.25rem); opacity: 1; }
+}
 .chat-error { color: #ef4444; font-size: 0.9rem; }
-.chat-input-row { display: flex; gap: 0.5rem; position: sticky; bottom: 1rem; }
-.chat-input {
-  flex: 1;
-  padding: 0.7rem 0.9rem;
-  border-radius: 0.6rem;
+
+/* Composer: one clean pill holding the input and a circular send button. */
+.chat-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: sticky;
+  bottom: 1.25rem;
+  padding: 0.35rem 0.35rem 0.35rem 1.15rem;
+  border-radius: 9999px;
   border: 1px solid var(--border-color, #333);
   background: var(--card-bg, #242424);
+  transition: border-color 0.2s ease;
+}
+.chat-composer:focus-within {
+  border-color: var(--accent-color, #38BDF8);
+}
+.chat-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0;
+  border: none;
+  background: transparent;
   color: inherit;
   font: inherit;
 }
-.chat-input:focus {
-  outline: none;
-  border-color: var(--accent-color, #38BDF8);
-}
+.chat-input:focus { outline: none; }
 .chat-input::placeholder { color: var(--text-muted, #909090); }
 .chat-send {
-  padding: 0.7rem 1.1rem;
-  border-radius: 0.6rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 9999px;
   border: none;
   background: var(--brand-color, #1E5AA8);
   color: #fff;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 .chat-send:hover:not(:disabled) { background: #17467f; }
+.chat-send:active:not(:disabled) { transform: scale(0.94); }
 .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-dot { animation: none; }
+  .chat-send:active:not(:disabled) { transform: none; }
+}
