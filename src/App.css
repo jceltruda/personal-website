@@ -473,6 +473,26 @@ body:has(.chat-page:not(.chat-page--active)) {
 }
 .chat-input:focus { outline: none; }
 .chat-input::placeholder { color: var(--text-muted, #909090); opacity: 1; }
+
+/* Subtle hint that the ghost-typed prompt can be accepted with Tab. Only shown
+   on the empty landing while the field is untouched. */
+.chat-hint {
+  position: relative;
+  z-index: 1;
+  margin-top: -0.75rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.chat-kbd {
+  font-family: inherit;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-main);
+}
 .chat-send {
   flex-shrink: 0;
   display: grid;

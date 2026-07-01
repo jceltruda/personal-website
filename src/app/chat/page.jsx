@@ -175,6 +175,12 @@ export default function ChatPage() {
           <ArrowUp size={18} strokeWidth={2.5} aria-hidden="true" />
         </button>
       </form>
+
+      {isEmpty && input === '' && (
+        <p className="chat-hint">
+          Press <kbd className="chat-kbd">Tab</kbd> to use the suggested prompt
+        </p>
+      )}
     </main>
   );
 }
