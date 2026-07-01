@@ -109,14 +109,16 @@ section h2 {
 /* Scroll-triggered reveal */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
-  will-change: opacity, transform;
+  transform: translateY(20vh);
+  visibility: hidden;
+  transition: opacity 0.6s var(--ease-out), transform 1.2s var(--ease-out);
+  will-change: opacity, transform, visibility;
 }
 
 .reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  visibility: visible;
 }
 
 /* Reduced motion: keep the gentle opacity fade, but drop the vertical movement. */
