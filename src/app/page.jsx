@@ -9,11 +9,11 @@ export default function Page() {
   return (
     <>
       <main className="app-container">
-        <Reveal><Header /></Reveal>
-        <Reveal><Experience /></Reveal>
-        <Reveal><Education /></Reveal>
-        <Reveal><Projects /></Reveal>
-        <Reveal><Skills /></Reveal>
+        <Reveal offset={30}><Header /></Reveal>
+        <Reveal offset={50} delay={0.15}><Experience /></Reveal>
+        <Reveal offset={50} delay={0.15}><Education /></Reveal>
+        <Reveal offset={50} delay={0.15}><Projects /></Reveal>
+        <Reveal offset={50} delay={0.15}><Skills /></Reveal>
       </main>
     </>
   );

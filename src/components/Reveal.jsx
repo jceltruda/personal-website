@@ -1,31 +1,23 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 
-export default function Reveal({ children, className = '' }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      // Reveal once, the first time the section scrolls into view, then stop
-      // observing so it never fades back out or re-animates on later scrolls.
-      if (entry.isIntersecting) {
-        setVisible(true);
-        observer.unobserve(entry.target);
-      }
-    });
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
+// Framer-style scroll-triggered appear: elements start at near-zero opacity
+// (0.001) and a small vertical offset, then spring to full opacity and their
+// natural position over 1s with zero bounce. `once: true` means each section
+// animates the first time it scrolls into view and never re-animates.
+export default function Reveal({ children, className = '', delay = 0, offset = 30 }) {
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div ref={ref} className={`reveal ${visible ? 'reveal-visible' : ''} ${className}`.trim()}>
+    <motion.div
+      className={className || undefined}
+      initial={{ opacity: 0.001, y: reduceMotion ? 0 : offset }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      transition={{ type: 'spring', bounce: 0, duration: 1, delay }}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 }
