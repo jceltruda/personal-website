@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(npm run *)",
-      "WebSearch",
-      "Bash(git add *)"
-    ]
-  }
-}
