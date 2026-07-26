@@ -27,6 +27,8 @@ Single-page portfolio website using Next.js App Router with plain JavaScript (JS
 
 **Static assets** live in `public/`: `headshot-cropped.jpg`, `resume.pdf`, and `logos/` (company/school logo images referenced in Experience and Education components).
 
+**Social card:** `src/app/opengraph-image.js` generates the 1200×630 OG/Twitter card at build time via `next/og` (`ImageResponse`). It is prerendered as a static route, so Next emits `og:image`, `og:image:width/height/type/alt`, and the `twitter:image` equivalents automatically — do not hand-write those in `layout.jsx`. Satori cannot use system fonts, so Inter 600/700 are committed as latin-subset WOFFs in `src/app/fonts/` and read with `fs`; the headshot is inlined as a base64 data URI. Type sizes are deliberately large because LinkedIn renders this card in a ~360px-wide box and re-encodes it as JPEG — anything under ~38px turns to mush at that scale. The `og:image` URL carries a content hash, so editing the file busts every downstream cache. Note that LinkedIn does not re-scrape on its own: after changing this, run the URL through LinkedIn's Post Inspector, and re-add the link in a Featured section since those store a snapshot from when the link was added.
+
 ## Design Context
 
 This project is set up for the **impeccable** design skill. Two root files carry the design intent — read them before significant UI work:
